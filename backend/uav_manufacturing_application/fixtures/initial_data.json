@@ -1,0 +1,106 @@
+[
+    {
+        "model": "uav_manufacturing_application.uavtype",
+        "pk": 1,
+        "fields": {
+            "name": "TB2"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.uavtype",
+        "pk": 2,
+        "fields": {
+            "name": "TB3"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.uavtype",
+        "pk": 3,
+        "fields": {
+            "name": "AKINCI"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.uavtype",
+        "pk": 4,
+        "fields": {
+            "name": "KIZILELMA"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.parttype",
+        "pk": -1,
+        "fields": {
+            "name": ""
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.parttype",
+        "pk": 1,
+        "fields": {
+            "name": "Kanat"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.parttype",
+        "pk": 2,
+        "fields": {
+            "name": "Gövde"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.parttype",
+        "pk": 3,
+        "fields": {
+            "name": "Kuyruk"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.parttype",
+        "pk": 4,
+        "fields": {
+            "name": "Aviyonik"
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.team",
+        "pk": -1,
+        "fields": {
+            "name": "Montaj Takımı",
+            "part_type_id": -1,
+            "is_montage_team": true
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.team",
+        "pk": 1,
+        "fields": {
+            "name": "Kanat Takımı",
+            "part_type_id": 1
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.team",
+        "pk": 2,
+        "fields": {
+            "name": "Gövde Takımı",
+            "part_type_id": 2
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.team",
+        "pk": 3,
+        "fields": {
+            "name": "Kuyruk Takımı",
+            "part_type_id": 3
+        }
+    },
+    {
+        "model": "uav_manufacturing_application.team",
+        "pk": 4,
+        "fields": {
+            "name": "Aviyonik Takımı",
+            "part_type_id": 4
+        }
+    }
+]

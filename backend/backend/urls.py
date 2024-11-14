@@ -16,11 +16,8 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.contrib import admin
-from rest_framework.routers import DefaultRouter
-from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from airplane_parts_inventory import views
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -35,15 +32,9 @@ schema_view = get_schema_view(
 #    permission_classes=(permissions.AllowAny,),
 )
 
-router = DefaultRouter()
-router.register(r'airplanes', views.AirplaneViewSet)
-router.register(r'parts', views.PartViewSet)
-router.register(r'teams', views.TeamViewSet)
-router.register(r'employee', views.EmployeeViewSet)
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
+    path('api/', include('uav_manufacturing_application.urls')), 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('swagger.json/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('health_check/', include('health_check.urls')),

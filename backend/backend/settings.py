@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'airplane_parts_inventory', ## app
+    'uav_manufacturing_application', ## app
      ## health_check
     'health_check',                             
     'health_check.db',                          
