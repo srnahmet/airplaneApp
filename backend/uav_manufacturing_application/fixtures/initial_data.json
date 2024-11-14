@@ -1,106 +1,213 @@
 [
-    {
-        "model": "uav_manufacturing_application.uavtype",
-        "pk": 1,
-        "fields": {
-            "name": "TB2"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.uavtype",
-        "pk": 2,
-        "fields": {
-            "name": "TB3"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.uavtype",
-        "pk": 3,
-        "fields": {
-            "name": "AKINCI"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.uavtype",
-        "pk": 4,
-        "fields": {
-            "name": "KIZILELMA"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.parttype",
-        "pk": -1,
-        "fields": {
-            "name": ""
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.parttype",
-        "pk": 1,
-        "fields": {
-            "name": "Kanat"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.parttype",
-        "pk": 2,
-        "fields": {
-            "name": "Gövde"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.parttype",
-        "pk": 3,
-        "fields": {
-            "name": "Kuyruk"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.parttype",
-        "pk": 4,
-        "fields": {
-            "name": "Aviyonik"
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.team",
-        "pk": -1,
-        "fields": {
-            "name": "Montaj Takımı",
-            "part_type_id": -1,
-            "is_montage_team": true
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.team",
-        "pk": 1,
-        "fields": {
-            "name": "Kanat Takımı",
-            "part_type_id": 1
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.team",
-        "pk": 2,
-        "fields": {
-            "name": "Gövde Takımı",
-            "part_type_id": 2
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.team",
-        "pk": 3,
-        "fields": {
-            "name": "Kuyruk Takımı",
-            "part_type_id": 3
-        }
-    },
-    {
-        "model": "uav_manufacturing_application.team",
-        "pk": 4,
-        "fields": {
-            "name": "Aviyonik Takımı",
-            "part_type_id": 4
-        }
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "asirin_kanat",
+      "password": "asirin",
+      "email": "srnahmet98@gmail.comm",
+      "first_name": "Ahmet",
+      "last_name": "Şirin Kanat",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-15T00:00:00Z"
     }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "asirin_govde",
+      "password": "asirin",
+      "email": "srnahmet98@gmail.comm",
+      "first_name": "Ahmet",
+      "last_name": "Şirin Gövde",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "asirin_kuyruk",
+      "password": "asirin",
+      "email": "srnahmet98@gmail.com",
+      "first_name": "Ahmet Şirin",
+      "last_name": "Kuyruk",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "asirin_aviyonik",
+      "password": "asirin",
+      "email": "srnahmet98@gmail.com",
+      "first_name": "Ahmet Aviyonik",
+      "last_name": "Kuyruk",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "asirin_montaj",
+      "password": "asirin",
+      "email": "srnahmet98@gmail.com",
+      "first_name": "Ahmet Montaj",
+      "last_name": "Kuyruk",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-11-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.employee",
+    "pk": 1,
+    "fields": {
+      "name": "Kanat Personeli",
+      "team_id": 1,
+      "user": 1
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.employee",
+    "pk": 2,
+    "fields": {
+      "name": "Gövde Personeli",
+      "team_id": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.employee",
+    "pk": 3,
+    "fields": {
+      "name": "Kuyruk Personeli",
+      "team_id": 3,
+      "user": 3
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.employee",
+    "pk": 4,
+    "fields": {
+      "name": "Kuyruk Personeli",
+      "team_id": 4,
+      "user": 4
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.employee",
+    "pk": 5,
+    "fields": {
+      "name": "Montaj Personeli",
+      "team_id": -1,
+      "user": 5
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.uavtype",
+    "pk": 1,
+    "fields": {
+      "name": "TB2"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.uavtype",
+    "pk": 2,
+    "fields": {
+      "name": "TB3"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.uavtype",
+    "pk": 3,
+    "fields": {
+      "name": "AKINCI"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.uavtype",
+    "pk": 4,
+    "fields": {
+      "name": "KIZILELMA"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.parttype",
+    "pk": 1,
+    "fields": {
+      "name": "Kanat"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.parttype",
+    "pk": 2,
+    "fields": {
+      "name": "Gövde"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.parttype",
+    "pk": 3,
+    "fields": {
+      "name": "Kuyruk"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.parttype",
+    "pk": 4,
+    "fields": {
+      "name": "Aviyonik"
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.team",
+    "pk": -1,
+    "fields": {
+      "name": "Montaj Takımı",
+      "is_montage_team": true
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.team",
+    "pk": 1,
+    "fields": {
+      "name": "Kanat Takımı",
+      "part_type_id": 1
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.team",
+    "pk": 2,
+    "fields": {
+      "name": "Gövde Takımı",
+      "part_type_id": 2
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.team",
+    "pk": 3,
+    "fields": {
+      "name": "Kuyruk Takımı",
+      "part_type_id": 3
+    }
+  },
+  {
+    "model": "uav_manufacturing_application.team",
+    "pk": 4,
+    "fields": {
+      "name": "Aviyonik Takımı",
+      "part_type_id": 4
+    }
+  }
 ]
