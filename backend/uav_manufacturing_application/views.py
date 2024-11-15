@@ -11,11 +11,39 @@ from rest_framework import status,viewsets,generics
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 import markdown
-
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import os
 # Create your views here.
 
-# mainpage
+#region token
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+        # Token içine ek bilgi ekleyebilirsiniz
+        token['username'] = user.username
+        return token
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        # Kullanıcıya ait employee bilgilerini ekleyin
+        try:
+            employee = Employee.objects.get(user_id=self.user.id)
+            data['employee'] = {
+                'id': employee.id,
+                'name': employee.name,
+                'team_id': employee.team_id,  # Örnek alanlar
+            }
+        except Employee.DoesNotExist:
+            data['employee'] = None
+        return data
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+#endregion
+
+#region mainpage
 def readme_view(request):
     app_dir = os.path.dirname(os.path.abspath(__file__))  
     readme_path = os.path.join(app_dir, "README.md")
@@ -27,7 +55,7 @@ def readme_view(request):
         return HttpResponse(mark_safe(html_content))
     except FileNotFoundError:
         return HttpResponse("README.md dosyası bulunamadı.", status=404)
-#
+#endregion
 
 #region Temel Viewlar
 class UAVViewSet(viewsets.ModelViewSet):
@@ -47,7 +75,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 #endregion
 
-# Tüm model view'larında Datatables işlemlerini yapmak için temel sınıf 
+#region Tüm model view'larında Datatables işlemlerini yapmak için temel sınıf 
 class BaseListView(APIView):
     model = None
     serializer_class = None
@@ -93,6 +121,7 @@ class BaseListView(APIView):
         }
 
         return Response(response_data)
+#endregion
 
 #region datatables view'ları
 

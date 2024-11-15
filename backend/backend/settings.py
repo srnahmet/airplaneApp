@@ -47,11 +47,18 @@ INSTALLED_APPS = [
     ## swagger and rest
     'rest_framework_swagger',
     'rest_framework',       
-    'drf_yasg'
+    'drf_yasg',
+    # token
+    'rest_framework_simplejwt',
+    # cors
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }
 
 SWAGGER_SETTINGS = {
@@ -73,7 +80,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True # tüm domainlerden gelen istekleri kabul eder
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',  
+#     'https://yourfrontenddomain.com',  
+# ]
+CORS_ALLOW_CREDENTIALS = True # Authorization başlıkları gibi kimlik doğrulama bilgilerini taşıyan isteklerin yapılmasına izin verir.
+
 
 ROOT_URLCONF = 'backend.urls'
 
