@@ -8,8 +8,26 @@ from django.db.models import Q
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from rest_framework import status,viewsets,generics
+from django.http import HttpResponse
+from django.utils.safestring import mark_safe
+import markdown
 
+import os
 # Create your views here.
+
+# mainpage
+def readme_view(request):
+    app_dir = os.path.dirname(os.path.abspath(__file__))  
+    readme_path = os.path.join(app_dir, "README.md")
+    try:
+        with open(readme_path, "r", encoding="utf-8") as file:
+            content = file.read()
+        # Markdown'u HTML'e dönüştür
+        html_content = markdown.markdown(content)
+        return HttpResponse(mark_safe(html_content))
+    except FileNotFoundError:
+        return HttpResponse("README.md dosyası bulunamadı.", status=404)
+#
 
 #region Temel Viewlar
 class UAVViewSet(viewsets.ModelViewSet):

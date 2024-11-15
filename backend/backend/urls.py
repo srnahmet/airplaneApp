@@ -18,6 +18,7 @@ from django.urls import include, path
 from django.contrib import admin
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from uav_manufacturing_application.views import readme_view
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,6 +34,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('', readme_view, name='main-page'),
     path('admin/', admin.site.urls),
     path('api/', include('uav_manufacturing_application.urls')), 
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
