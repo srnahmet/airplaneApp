@@ -30,20 +30,36 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Kullanıcıya ait employee bilgilerini ekleyin
         try:
             employee = Employee.objects.get(user_id=self.user.id)
+            team = Team.objects.get(id=employee.team_id)
+
             data['employee'] = {
                 'id': employee.id,
                 'name': employee.name,
-                'team_id': employee.team_id,  # Örnek alanlar
+                'team_id': employee.team_id,  
             }
-        except Employee.DoesNotExist:
-            data['employee'] = None
+            data['team'] = {
+                'id': team.id,
+                'name': team.name,
+                'part_type_name': team.part_type.name if team.part_type else None,
+                'part_type_id': team.part_type.id if team.part_type else None,
+                'is_montage_team':team.is_montage_team  
+            }
+
+        except Team.DoesNotExist:
+            data['team'] = None
+            data['employee'] = {
+                'id': employee.id,
+                'name': employee.name,
+                'team_id': employee.team_id,  
+            }
+            
         return data
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 #endregion
 
-#region mainpage
+#region mainpage readme
 def readme_view(request):
     app_dir = os.path.dirname(os.path.abspath(__file__))  
     readme_path = os.path.join(app_dir, "README.md")

@@ -53,7 +53,7 @@ class Command(BaseCommand):
             {'username': 'asirin_govde', 'name': 'Gövde Personeli', 'team_id': 2},
             {'username': 'asirin_kuyruk', 'name': 'Kuyruk Personeli', 'team_id': 3},
             {'username': 'asirin_aviyonik', 'name': 'Aviyonik Personeli', 'team_id': 4},
-            {'username': 'asirin_montaj', 'name': 'Montaj Personeli', 'team_id': None},  # Takım bilgisi yok
+            {'username': 'asirin_montaj', 'name': 'Montaj Personeli', 'team_id': 5},  
         ]
 
         # Kullanıcıları ve Employee nesnelerini oluşturur
