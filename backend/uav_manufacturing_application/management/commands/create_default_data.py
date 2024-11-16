@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from uav_manufacturing_application.models import Employee, Team, PartType, UAVType, UAV
+from uav_manufacturing_application.models import Employee, Team, PartType, UAVType, UAV, Part
 from django.utils.timezone import now
 
 class Command(BaseCommand):
@@ -44,6 +44,53 @@ class Command(BaseCommand):
         ]
         for part_type in part_types:
             PartType.objects.create(**part_type)
+
+        # Part Type'ları oluşturma
+        montagedParts = []
+        for index, uav in enumerate(uavs, start=1): 
+            for part_type_id in range(1, 5):
+                montagedParts.append({
+                    'uav_id': index,
+                    'uav_type_id': uav['uav_type_id'],
+                    'create_date': uav['create_date'],
+                    'part_type_id': part_type_id
+                })
+        for part in montagedParts:
+            Part.objects.create(**part)  
+        newParts = [
+                {'part_type_id': '1', 'uav_type_id': '1', 'create_date': '2024-11-2'},
+                {'part_type_id': '3', 'uav_type_id': '4', 'create_date': '2024-11-21'},
+                {'part_type_id': '2', 'uav_type_id': '3', 'create_date': '2024-11-5'},
+                {'part_type_id': '4', 'uav_type_id': '1', 'create_date': '2024-11-7'},
+                {'part_type_id': '3', 'uav_type_id': '2', 'create_date': '2024-11-13'},
+                {'part_type_id': '1', 'uav_type_id': '3', 'create_date': '2024-11-9'},
+                {'part_type_id': '4', 'uav_type_id': '1', 'create_date': '2024-11-30'},
+                {'part_type_id': '2', 'uav_type_id': '4', 'create_date': '2024-11-12'},
+                {'part_type_id': '3', 'uav_type_id': '4', 'create_date': '2024-11-6'},
+                {'part_type_id': '4', 'uav_type_id': '1', 'create_date': '2024-11-19'},
+                {'part_type_id': '2', 'uav_type_id': '3', 'create_date': '2024-11-10'},
+                {'part_type_id': '1', 'uav_type_id': '2', 'create_date': '2024-11-27'},
+                {'part_type_id': '4', 'uav_type_id': '3', 'create_date': '2024-11-15'},
+                {'part_type_id': '2', 'uav_type_id': '4', 'create_date': '2024-11-8'},
+                {'part_type_id': '3', 'uav_type_id': '2', 'create_date': '2024-11-14'},
+                {'part_type_id': '1', 'uav_type_id': '3', 'create_date': '2024-11-23'},
+                {'part_type_id': '2', 'uav_type_id': '4', 'create_date': '2024-11-22'},
+                {'part_type_id': '3', 'uav_type_id': '1', 'create_date': '2024-11-17'},
+                {'part_type_id': '4', 'uav_type_id': '2', 'create_date': '2024-11-29'},
+                {'part_type_id': '1', 'uav_type_id': '4', 'create_date': '2024-11-4'},
+                {'part_type_id': '3', 'uav_type_id': '2', 'create_date': '2024-11-24'},
+                {'part_type_id': '2', 'uav_type_id': '1', 'create_date': '2024-11-18'},
+                {'part_type_id': '4', 'uav_type_id': '3', 'create_date': '2024-11-20'},
+                {'part_type_id': '1', 'uav_type_id': '2', 'create_date': '2024-11-16'},
+                {'part_type_id': '4', 'uav_type_id': '1', 'create_date': '2024-11-25'},
+                {'part_type_id': '3', 'uav_type_id': '2', 'create_date': '2024-11-3'},
+                {'part_type_id': '1', 'uav_type_id': '4', 'create_date': '2024-11-28'},
+                {'part_type_id': '2', 'uav_type_id': '3', 'create_date': '2024-11-26'},
+                {'part_type_id': '4', 'uav_type_id': '1', 'create_date': '2024-11-11'},
+                {'part_type_id': '3', 'uav_type_id': '2', 'create_date': '2024-11-1'}
+        ]
+        for part in newParts:
+            Part.objects.create(**part)
 
         # Takımların oluşturulması
         teams = [

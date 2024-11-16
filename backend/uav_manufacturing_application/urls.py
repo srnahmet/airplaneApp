@@ -20,10 +20,16 @@ urlpatterns = [
     path('uav-types/', views.UAVTypeViewSet.as_view(), name='uav-types-list'),
     # datatables api ları
     path('uav-list/', views.UAVListView.as_view(), name='uav-list'), 
-    path('parts-list/', views.PartListView.as_view(), name='parts-list'), 
     path('teams-list/', views.TeamListView.as_view(), name='teams-list'), 
     path('employee-list/', views.EmployeeListView.as_view(), name='employee-list'), 
-    path('employees/<int:team_id>/', views.EmployeeListViewByTeamId.as_view(), name='employee-list'),
+    # by-id list
+    path('employees/<int:team_id>/', views.EmployeeListViewByTeamId.as_view(), name='employee-list-by-team-id'),
+    path('parts-list-by-uav-id/<int:uav_id>/', views.PartListViewByUAVId.as_view(), name='part-list-by-uav-id'),
+    path('parts-list-by-uav-type-id/<int:uav_type_id>/', views.PartListViewByUavTypeId.as_view(), name='part-list-by-uav-type-id'),
+    path('parts-list-by-uav-type-id-count/<int:uav_type_id>/', views.PartListViewByUavTypeIdPartTypeCounts.as_view(), name='part-list-by-uav-type-id'),
+
+
+
     #token
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

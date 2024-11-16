@@ -1,5 +1,5 @@
-import { Box, Grid2, Tab, Tabs, Typography } from '@mui/material'
-import React, { Fragment, useEffect, useState } from 'react'
+import { Box, Tab, Tabs,  } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import MUIDataTable from "mui-datatables";
 import { language } from '../../../utils/dataTableOptions';
 
@@ -8,7 +8,6 @@ function TeamPage() {
   // tab
   const [tabValue, setTabValue] = useState(5);
   const [tabs, setTabs] = useState([]);
-
 
   const [data, setData] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
@@ -41,7 +40,7 @@ function TeamPage() {
     fetch('http://127.0.0.1:8000/api/teams-list/')
       .then(response => {
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error('Hata');
         }
         return response.json();
       })
@@ -49,7 +48,7 @@ function TeamPage() {
         setTabs(data)
       })
       .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('Error:', error);
       }).finally(() => setLoading(false));
   }
 

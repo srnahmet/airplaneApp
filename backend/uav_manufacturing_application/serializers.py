@@ -32,7 +32,7 @@ class PartSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Part
-        fields = ['id', 'name', 'uav_type', 'uav_type_name', 'part_type', 'part_type_name', 'uav', 'uav_name']
+        fields = ['id', 'uav_type', 'uav_type_name', 'part_type', 'part_type_name', 'uav', 'uav_name', 'create_date']
 
 class TeamSerializer(serializers.ModelSerializer):
     part_type_name = PartTypeSerializer(source='part_type', read_only=True)

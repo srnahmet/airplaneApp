@@ -4,7 +4,6 @@ import AppBarComponent from './appBarComponent';
 import UawPage from './homePages/uawPage';
 import TeamsPage from './homePages/teamsPage';
 import PartsPage from './homePages/partsPage';
-import MontagePage from './homePages/montagePage';
 
 
 import { useState } from 'react';
@@ -18,7 +17,6 @@ const Home = () => {
     { id: "uaw", name: "İHA Envanteri", desc: "İnsansız Hava Araçlarının listesi ve bilgileri" },
     { id: "teams", name: "Takımlar", desc: "Farklı takımlar ve görev dağılımlarının detayları" },
     { id: "parts", name: "Parçalar", desc: "Montajda kullanılan bileşenler ve ekipmanlar" },
-    { id: "montage", name: "Montaj", desc: "Montaj işlemleri" }
   ];
 
   return (
@@ -35,7 +33,6 @@ const Home = () => {
           {currentPage === "uaw" && <UawPage />}
           {currentPage === "teams" && <TeamsPage />}
           {currentPage === "parts" && <PartsPage />}
-          {currentPage === "montage" && <MontagePage />}
         </Paper>
       </Box>
     </Box>

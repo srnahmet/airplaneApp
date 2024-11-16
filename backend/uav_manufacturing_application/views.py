@@ -92,7 +92,7 @@ class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
 #endregion
 
-#region Tüm model view'larında Datatables işlemlerini yapmak için temel sınıf 
+#region Datatables işlemlerini yapmak için temel sınıf 
 class BaseListView(APIView):
     model = None
     serializer_class = None
@@ -169,13 +169,43 @@ class UAVListView(BaseListView):
     model = UAV
     serializer_class = UAVSerializer
 
-class PartListView(BaseListView):
-    model = Part
-    serializer_class = PartSerializer
-    # def get(self, request, *args, **kwargs):
-    #     parts = Part.objects.select_related('uav_type', 'part_type', 'uav').all()  # Parçalarla ilişkili iha türleri, parça türleri ve ihalar
-    #     serializer = PartSerializer(parts, many=True)
-    #     return Response(serializer.data)
+class PartListViewByUAVId(BaseListView):
+    def get(self, request, uav_id, *args, **kwargs):
+        parts = Part.objects.filter(uav_id=uav_id)
+        
+        if not parts.exists():
+            return Response({"detail": "Parça mevcut değil."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PartSerializer(parts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class PartListViewByUavTypeId(BaseListView):
+    def get(self, request, uav_type_id, *args, **kwargs):
+        if uav_type_id==0:
+            parts = Part.objects.filter(uav_id__isnull=True)
+        else: 
+            parts = Part.objects.filter(uav_type_id=uav_type_id,uav_id__isnull=True)
+        
+        if not parts.exists():
+            return Response({"detail": "Parça mevcut değil."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = PartSerializer(parts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class PartListViewByUavTypeIdPartTypeCounts(APIView):
+    def get(self, request, uav_type_id, *args, **kwargs):
+        if uav_type_id==0:
+            parts_grouped = Part.objects.filter(uav_id__isnull=True).values('part_type').annotate(part_count=Count('part_type'))
+        else: 
+            parts_grouped = Part.objects.filter(uav_type_id=uav_type_id,uav_id__isnull=True).values('part_type').annotate(part_count=Count('part_type'))
+
+        # Eğer grup yoksa
+        if not parts_grouped:
+            return Response({"detail": "Grup bulunamadı."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Gruplama sonucu her bir part_type ile birlikte dönen veri
+        return Response(parts_grouped, status=status.HTTP_200_OK)
+
 
 class TeamListView(APIView):
     def get(self, request, *args, **kwargs):
@@ -196,7 +226,6 @@ class EmployeeListViewByTeamId(APIView):
         
         serializer = EmployeeSerializer(employees, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
 class UAVTypeViewSet(generics.ListAPIView):
     queryset = UAVType.objects.all()
