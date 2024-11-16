@@ -5,13 +5,9 @@ class DatatableParamsSerializer(serializers.Serializer):
     start = serializers.IntegerField(default=0)
     length = serializers.IntegerField(default=10)
     search_value = serializers.CharField(default='', required=False)
-    order_column = serializers.IntegerField(default=0)
+    order_column = serializers.CharField(default='id')
     order_dir = serializers.ChoiceField(choices=['asc', 'desc'], default='asc')
 
-class UAVSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UAV
-        fields = ['id', 'name']
 
 class PartTypeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,6 +18,12 @@ class UAVTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UAVType
         fields = ['id', 'name']
+
+class UAVSerializer(serializers.ModelSerializer):
+    uav_type = UAVTypeSerializer()
+    class Meta:
+        model = UAV
+        fields = ['id', 'create_date', 'uav_type']
 
 class PartSerializer(serializers.ModelSerializer):
     uav_type_name = UAVTypeSerializer(source='uav_type', read_only=True)

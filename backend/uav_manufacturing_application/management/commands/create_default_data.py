@@ -1,10 +1,11 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
-from uav_manufacturing_application.models import Employee, Team, PartType, UAVType
+from uav_manufacturing_application.models import Employee, Team, PartType, UAVType, UAV
+from django.utils.timezone import now
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        # UAV Type'ları oluştur
+        # IHA Type'ları oluşturma
         uav_types = [
             {'name': 'TB2'},
             {'name': 'TB3'},
@@ -14,7 +15,27 @@ class Command(BaseCommand):
         for uav_type in uav_types:
             UAVType.objects.create(**uav_type)
 
-        # Part Type'ları oluştur
+        # IHA oluşturma
+        uavs = [
+            {'uav_type_id':"1",'create_date':'2024-11-2',},
+            {'uav_type_id':"2",'create_date':'2024-11-5'},
+            {'uav_type_id':"1",'create_date':'2024-11-7'},
+            {'uav_type_id':"3",'create_date':'2024-11-7'},
+            {'uav_type_id':"4",'create_date':'2024-11-8'},
+            {'uav_type_id':"4",'create_date':'2024-11-8'},
+            {'uav_type_id':"4",'create_date':'2024-11-8'},
+            {'uav_type_id':"3",'create_date':'2024-11-8'},
+            {'uav_type_id':"3",'create_date':'2024-11-10'},
+            {'uav_type_id':"2",'create_date':'2024-11-12'},
+            {'uav_type_id':"1",'create_date':'2024-11-12'},
+            {'uav_type_id':"4",'create_date':'2024-11-16'},
+            {'uav_type_id':"2",'create_date':'2024-11-17'},
+            {'uav_type_id':"4",'create_date':'2024-11-17'},
+        ]
+        for uav in uavs:
+            UAV.objects.create(**uav)
+
+        # Part Type'ları oluşturma
         part_types = [
             {'name': 'Kanat'},
             {'name': 'Gövde'},
@@ -39,7 +60,7 @@ class Command(BaseCommand):
                 part_type = PartType.objects.get(id=part_type_id)
             Team.objects.create(name=team['name'], part_type=part_type, is_montage_team=team.get('is_montage_team', False))
 
-        # Süper kullanıcıyı oluştur
+        # Süper kullanıcıyı oluşturma
         superuser = User.objects.create_superuser(
             username='asirin',
             password='asirin',
@@ -69,7 +90,7 @@ class Command(BaseCommand):
             if user_info['team_id']:
                 team = Team.objects.get(id=user_info['team_id'])
 
-            # Employee nesnesini oluştur
+            # Employee nesnesini oluşturma
             Employee.objects.create(user=user, name=user_info['name'], team=team)
 
         self.stdout.write(self.style.SUCCESS('Data oluşturma başarılı!'))

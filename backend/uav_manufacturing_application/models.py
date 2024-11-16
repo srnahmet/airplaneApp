@@ -1,23 +1,25 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 
-# İHA Modeli
-class UAV(models.Model):
-    name = models.CharField(max_length=50,default=None)
-    model = models.CharField(max_length=100,default=None)
 
-    def __str__(self):
-        return self.name
-
-# İHA Modeli: İHA tipini tanımlar
+# İHA Modeli: İHA tipi
 class UAVType(models.Model):
     name = models.CharField(max_length=50,default=None)
 
     def __str__(self):
         return self.name
+    
+# İHA Modeli
+class UAV(models.Model):
+    uav_type = models.ForeignKey(UAVType, on_delete=models.CASCADE, related_name="uav_types", default=None)
+    create_date = models.DateTimeField(default=now, verbose_name="Oluşturulma Tarihi")
 
-# PartType Modeli: Parça türünü tanımlar
+    def __str__(self):
+        return self.name
+
+# PartType Modeli: Parça türü
 class PartType(models.Model):
     name = models.CharField(max_length=50,default=None)
 
@@ -43,7 +45,7 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-# Employee Modeli.name
+# Employee Modeli
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=50)

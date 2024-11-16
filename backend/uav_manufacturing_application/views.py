@@ -109,19 +109,41 @@ class BaseListView(APIView):
         start = datatable_params.validated_data['start']
         length = datatable_params.validated_data['length']
         search_value = datatable_params.validated_data['search_value']
-        order_column = datatable_params.validated_data['order_column']
+        order_column = datatable_params.validated_data['order_column']  # string değer
         order_dir = datatable_params.validated_data['order_dir']
 
-        # Sıralama işlemi
-        order_by_columns = ['id', 'name']  # Bu, her model için özelleştirilebilir
-        order_by = order_by_columns[int(order_column)]
+        # valid_columns = ['id', 'name', 'create_date', 'related_model__title']  
+        # if order_column not in valid_columns:
+        #     return Response({"error": f"Invalid order column: {order_column}"}, status=status.HTTP_400_BAD_REQUEST)
+
+        order_by = order_column
         if order_dir == 'desc':
             order_by = '-' + order_by
 
-        # Arama işlemi
+         # Dinamik arama işlemi (özelleştirilebilir)
         queryset = self.model.objects.all()
         if search_value:
-            queryset = queryset.filter(Q(name__icontains=search_value))
+            query_filter = Q()
+            
+            # Modelin tüm alanlarını al ve arama filtresini oluştur
+            for field in self.model._meta.get_fields():
+                field_name = field.name
+
+                # Eğer ilişkilendirilmiş bir modelse (ForeignKey, OneToOneField vb.)
+                if field.is_relation:
+                    # İlişkili modelin adını almak için:
+                    related_model = field.related_model
+                    
+                    # İlişkili modeldeki 'name' gibi bir alanda arama yap
+                    print("related_model",related_model)
+                    if hasattr(related_model, 'name'):  # İlişkili modelin 'name' alanı varsa
+                        query_filter |= Q(**{f"{field_name}__name__icontains": search_value})
+
+                else:
+                    # İlişkili olmayan alanda (örneğin: 'create_date', 'id') arama yapılır
+                    query_filter |= Q(**{f"{field_name}__icontains": search_value})
+            
+            queryset = queryset.filter(query_filter)
 
         # Sayfalama ve sıralama
         total_count = self.model.objects.count()
