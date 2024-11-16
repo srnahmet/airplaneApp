@@ -94,7 +94,7 @@ function TeamPage() {
       </Box>
 
       <MUIDataTable
-        title={"Personeller"}
+        title={tabs.filter(tab=>tab.id===tabValue)?.[0]?.name + " Personelleri"}
         data={data}
         columns={columns}
         options={options}

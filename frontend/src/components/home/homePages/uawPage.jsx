@@ -59,7 +59,7 @@ function UAWPage() {
         new Date(item.create_date).toLocaleDateString(),
         item.uav_type.id,
       ]));
-      setTotalRecords(result.recordsTotal);
+      setTotalRecords(result.recordsFiltered);
     } catch (error) {
       console.error("API hatası:", error);
     } finally {
