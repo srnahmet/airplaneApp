@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState } from 'react'
-import { Box, Tab, Tabs,  } from '@mui/material'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Box, Tab, Tabs, } from '@mui/material'
 import { BarChart } from '@mui/x-charts/BarChart';
 
 function PartsPage() {
@@ -11,12 +11,12 @@ function PartsPage() {
   const [parts, setParts] = useState([]);
   const [partCounts, setPartCounts] = useState([]);
 
-  const [partTypes,setPartTypes] = useState([]);
+  const [partTypes, setPartTypes] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
 
-  const fetchParthData = (newValue = 0) => {
+  const fetchParthData = (newValue = 0, draftPartyTypes=[]) => {
     setLoading(true)
     fetch(`http://127.0.0.1:8000/api/parts-list-by-uav-type-id-count/${newValue}/`)
       .then(response => {
@@ -26,8 +26,9 @@ function PartsPage() {
         return response.json();
       })
       .then(data => {
-        const draft = partTypes.map(item=>data.filter(item2=>item2.part_type==item.id)?.[0]?.part_count);
-        console.log(partTypes,data)
+        const draft = partTypes.length>0 
+          ? partTypes.map(item => data.filter(item2 => item2.part_type == item.id)?.[0]?.part_count)
+          : draftPartyTypes.map(item => data.filter(item2 => item2.part_type == item.id)?.[0]?.part_count);
         setPartCounts(draft)
       })
       .catch(error => {
@@ -63,10 +64,13 @@ function PartsPage() {
       })
       .then(data => {
         setPartTypes(data)
+        fetchParthData(0,data);
       })
       .catch(error => {
         console.error('Error:', error);
-      }).finally(() => setLoading(false));
+      }).finally(() => {
+        setLoading(false);
+      });
   }
 
   const handleTabValueChange = (event, newValue) => {
@@ -100,7 +104,7 @@ function PartsPage() {
 
       <BarChart
         fullWidth
-        xAxis={[{ scaleType: 'band', data: partTypes.map(item=>item?.name) }]}
+        xAxis={[{ scaleType: 'band', data: partTypes.map(item => item?.name) }]}
         series={[{ data: partCounts }]}
         height={300}
         borderRadius={25}

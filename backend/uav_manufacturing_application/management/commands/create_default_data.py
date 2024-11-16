@@ -2,6 +2,8 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from uav_manufacturing_application.models import Employee, Team, PartType, UAVType, UAV, Part
 from django.utils.timezone import now
+from datetime import datetime, timedelta
+import random
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
@@ -47,12 +49,18 @@ class Command(BaseCommand):
 
         # Part Type'ları oluşturma
         montagedParts = []
-        for index, uav in enumerate(uavs, start=1): 
+        for index, uav in enumerate(uavs, start=1):
             for part_type_id in range(1, 5):
+                create_date = datetime.strptime(uav['create_date'], '%Y-%m-%d')  
+
+                random_days_ago = random.randint(1, 60)
+
+                modified_create_date = create_date - timedelta(days=random_days_ago)  
+
                 montagedParts.append({
                     'uav_id': index,
                     'uav_type_id': uav['uav_type_id'],
-                    'create_date': uav['create_date'],
+                    'create_date': modified_create_date.strftime('%Y-%m-%d'),  
                     'part_type_id': part_type_id
                 })
         for part in montagedParts:

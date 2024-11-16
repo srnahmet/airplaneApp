@@ -6,7 +6,7 @@ import { language } from '../../../utils/dataTableOptions';
 function TeamPage() {
 
   // tab
-  const [tabValue, setTabValue] = useState(5);
+  const [tabValue, setTabValue] = useState(1);
   const [tabs, setTabs] = useState([]);
 
   const [data, setData] = useState([]);

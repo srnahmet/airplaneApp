@@ -1,24 +1,29 @@
 export const language = {
     body: {
-        noMatch: "Veri bulunamadı",  // 'No data available' yerine
-        toolTip: "Sırala",           // 'Sort' yerine
+        noMatch: "Veri bulunamadı",  
+        toolTip: "Sırala",           
     },
     pagination: {
-        next: "Sonraki",             // 'Next' yerine
-        previous: "Önceki",          // 'Previous' yerine
-        rowsPerPage: "Satır başına", // 'Rows per page' yerine
-        displayRows: "gösteriliyor", // 'of' yerine
+        next: "Sonraki",             
+        previous: "Önceki",          
+        rowsPerPage: "Satır başına", 
+        displayRows: "gösteriliyor", 
     },
     toolbar: {
-        search: "Arama",            // 'Search' yerine
-        downloadCsv: "CSV İndir",   // 'Download CSV' yerine
-        print: "Yazdır",             // 'Print' yerine
-        viewColumns: "Görünüm",      // 'View Columns' yerine
-        filterTable: "Filtrele",     // 'Filter table' yerine
+        search: "Arama",            
+        downloadCsv: "CSV İndir",   
+        print: "Yazdır",            
+        viewColumns: "Görünüm",     
+        filterTable: "Filtrele",    
     },
     filter: {
-        all: "Hepsi",                // 'All' yerine
-        title: "Filtreler",          // 'Filter' yerine
-        reset: "Sıfırla",            // 'Reset' yerine
-    }
+        all: "Hepsi",               
+        title: "Filtreler",         
+        reset: "Sıfırla",           
+    },
+    selectedRows: {
+        text: "Veri Seçildi",  
+        delete: "Seçili Satırı Sil",
+        deleteTooltip: "Seçili satırı silmek için tıklayın"
+    },
 }

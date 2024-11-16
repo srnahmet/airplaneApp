@@ -16,7 +16,7 @@ const Home = () => {
   const pages = [
     { id: "uaw", name: "İHA Envanteri", desc: "İnsansız Hava Araçlarının listesi ve bilgileri" },
     { id: "teams", name: "Takımlar", desc: "Farklı takımlar ve görev dağılımlarının detayları" },
-    { id: "parts", name: "Parçalar", desc: "Montajda kullanılan bileşenler ve ekipmanlar" },
+    { id: "parts", name: "Parçalar ve Montaj", desc: "Montajda kullanılan bileşenler ve ekipmanlar" },
   ];
 
   return (
