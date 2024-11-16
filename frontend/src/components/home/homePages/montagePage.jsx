@@ -4,12 +4,7 @@ function MontagePage() {
   return (
 
 
-    <div>    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>MontagePage</div>
+    <div> MontagePage</div>
   )
 }
 

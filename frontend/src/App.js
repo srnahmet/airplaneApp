@@ -31,7 +31,7 @@ const App = () => {
               marginTop: "15%",
             }}
           >
-            <Typography variant="h1" color="secondat" gutterBottom >İHA ÜRETİM UYGULAMASI</Typography>
+            <Typography variant="h1" color="secondary" gutterBottom >İHA ÜRETİM UYGULAMASI</Typography>
             <Login onLogin={handleLogin} />
           </Box>
         ) : (

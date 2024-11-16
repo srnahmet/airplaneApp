@@ -8,6 +8,7 @@ import MontagePage from './homePages/montagePage';
 
 
 import { useState } from 'react';
+import { Paper } from '@mui/material';
 
 const Home = () => {
 
@@ -24,10 +25,19 @@ const Home = () => {
     <Box>
       <AppBarComponent pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
 
-      { currentPage==="uaw" && <UawPage/>}
-      { currentPage==="teams" && <TeamsPage/>}
-      { currentPage==="parts" && <PartsPage/>}
-      { currentPage==="montage" && <MontagePage/>}
+      <Box sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: "15%",
+      }}>
+        <Paper elevation={3} sx={{width:"100%"}}>
+          {currentPage === "uaw" && <UawPage />}
+          {currentPage === "teams" && <TeamsPage />}
+          {currentPage === "parts" && <PartsPage />}
+          {currentPage === "montage" && <MontagePage />}
+        </Paper>
+      </Box>
     </Box>
   );
 }
