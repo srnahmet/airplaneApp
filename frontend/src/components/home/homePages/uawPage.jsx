@@ -5,6 +5,7 @@ import tb2Image from "./../../../assets/images/tb2.png"
 import tb3Image from "./../../../assets/images/tb3.png"
 import akinciImage from "./../../../assets/images/akinci.png"
 import kizileImage from "./../../../assets/images/kizilelma.png"
+import { language } from '../../../utils/dataTableOptions';
 
 const uavTypeToImage = (type) => {
   switch (type) {
@@ -73,6 +74,7 @@ function UAWPage() {
     rowsPerPage: 10,
     rowsPerPageOptions: [10, 20, 50],
     selectableRows: "none",
+    textLabels:language,
     onTableChange: (action, tableState) => {
       if (action === "changePage" || action === "changeRowsPerPage" || action === "sort" || action === "search") {
         const { page, rowsPerPage, searchText, sortOrder } = tableState;
