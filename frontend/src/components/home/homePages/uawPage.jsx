@@ -83,7 +83,6 @@ function UAWPage() {
         const searchValue = searchText || "";
         const orderColumn = sortOrder ? columns.filter((col) => col.name === sortOrder.name)?.[0]?.column_name : "id";
         const orderDir = sortOrder ? sortOrder?.direction : "asc";
-        console.log()
         fetchData(start, length, searchValue, orderColumn, orderDir);
       }
     },

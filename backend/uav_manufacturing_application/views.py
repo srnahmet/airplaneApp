@@ -13,6 +13,7 @@ from django.utils.safestring import mark_safe
 import markdown
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.db.models import Count
 import os
 # Create your views here.
 
@@ -176,13 +177,11 @@ class PartListView(BaseListView):
     #     serializer = PartSerializer(parts, many=True)
     #     return Response(serializer.data)
 
-class TeamListView(BaseListView):
-    model = Team
-    serializer_class = TeamSerializer
-    # def get(self, request, *args, **kwargs):
-    #     teams = Team.objects.prefetch_related('part_type').all()  # Takımlarla ilişkili parça türlerini çekiyoruz
-    #     serializer = TeamSerializer(teams, many=True)
-    #     return Response(serializer.data)
+class TeamListView(APIView):
+    def get(self, request, *args, **kwargs):
+        teams = Team.objects.annotate(employee_count=Count('employee'))
+        serializer = TeamSerializer(teams, many=True)        
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class EmployeeListView(BaseListView):
     model = Employee
