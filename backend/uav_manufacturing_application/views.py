@@ -186,10 +186,17 @@ class TeamListView(APIView):
 class EmployeeListView(BaseListView):
     model = Employee
     serializer_class = EmployeeSerializer
-    # def get(self, request, *args, **kwargs):
-    #     employees = Employee.objects.select_related('team').all()  # Çalışanlarla ilişkili takımları çekiyoruz
-    #     serializer = EmployeeSerializer(employees, many=True)
-    #     return Response(serializer.data)
+
+class EmployeeListViewByTeamId(APIView):
+    def get(self, request, team_id, *args, **kwargs):
+        employees = Employee.objects.filter(team_id=team_id)
+        
+        if not employees.exists():
+            return Response({"detail": "Bu takımın personeli yoktur."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = EmployeeSerializer(employees, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
 class UAVTypeViewSet(generics.ListAPIView):
     queryset = UAVType.objects.all()

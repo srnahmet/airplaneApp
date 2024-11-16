@@ -23,6 +23,7 @@ urlpatterns = [
     path('parts-list/', views.PartListView.as_view(), name='parts-list'), 
     path('teams-list/', views.TeamListView.as_view(), name='teams-list'), 
     path('employee-list/', views.EmployeeListView.as_view(), name='employee-list'), 
+    path('employees/<int:team_id>/', views.EmployeeListViewByTeamId.as_view(), name='employee-list'),
     #token
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
