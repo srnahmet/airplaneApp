@@ -71,10 +71,31 @@ class Command(BaseCommand):
         # Kullanıcı bilgileri
         users_info = [
             {'username': 'asirin_kanat', 'name': 'Kanat Personeli', 'team_id': 1},
-            {'username': 'asirin_govde', 'name': 'Gövde Personeli', 'team_id': 2},
+            {'username': 'asirin_kanat2', 'name': 'Kanat Personeli 2', 'team_id': 1},
+            {'username': 'asirin_kanat3', 'name': 'Kanat Personeli 3', 'team_id': 1},
+            {'username': 'asirin_kanat4', 'name': 'Kanat Personeli 4', 'team_id': 1},
+            {'username': 'asirin_kanat5', 'name': 'Kanat Personeli 5', 'team_id': 1},
+            {'username': 'asirin_kanat6', 'name': 'Kanat Personeli 6', 'team_id': 1},
+            {'username': 'asirin_govde', 'name': 'Gövde Personeli ', 'team_id': 2},
+            {'username': 'asirin_govde2', 'name': 'Gövde Personeli 2', 'team_id': 2},
+            {'username': 'asirin_govde3', 'name': 'Gövde Personeli 3', 'team_id': 2},
+            {'username': 'asirin_govde4', 'name': 'Gövde Personeli 4', 'team_id': 2},
+            {'username': 'asirin_govde5', 'name': 'Gövde Personeli 5', 'team_id': 2},
+            {'username': 'asirin_govde6', 'name': 'Gövde Personeli 6', 'team_id': 2},
+            {'username': 'asirin_govde8', 'name': 'Gövde Personeli 8', 'team_id': 2},
+            {'username': 'asirin_govde9', 'name': 'Gövde Personeli 9', 'team_id': 2},
+            {'username': 'asirin_govde10', 'name': 'Gövde Personeli 10', 'team_id': 2},
+            {'username': 'asirin_govde11', 'name': 'Gövde Personeli 11', 'team_id': 2},
             {'username': 'asirin_kuyruk', 'name': 'Kuyruk Personeli', 'team_id': 3},
+            {'username': 'asirin_kuyruk2', 'name': 'Kuyruk Personeli 2', 'team_id': 3},
+            {'username': 'asirin_kuyruk3', 'name': 'Kuyruk Personeli 3', 'team_id': 3},
             {'username': 'asirin_aviyonik', 'name': 'Aviyonik Personeli', 'team_id': 4},
-            {'username': 'asirin_montaj', 'name': 'Montaj Personeli', 'team_id': 5},  
+            {'username': 'asirin_aviyonik2', 'name': 'Aviyonik Personeli 2', 'team_id': 4},
+            {'username': 'asirin_aviyonik3', 'name': 'Aviyonik Personeli 3', 'team_id': 4},
+            {'username': 'asirin_aviyonik4', 'name': 'Aviyonik Personeli 4', 'team_id': 4},
+            {'username': 'asirin_aviyonik5', 'name': 'Aviyonik Personeli 5', 'team_id': 4},
+            {'username': 'asirin_montaj', 'name': 'Montaj Personeli', 'team_id': 5}, 
+            {'username': 'asirin_montaj2', 'name': 'Montaj Personeli', 'team_id': 5},  
         ]
 
         # Kullanıcıları ve Employee nesnelerini oluşturur

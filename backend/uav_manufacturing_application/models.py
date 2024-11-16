@@ -44,6 +44,10 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+    
+    @property
+    def employee_count(self):
+        return self.employee.count()
 
 # Employee Modeli
 class Employee(models.Model):

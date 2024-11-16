@@ -36,10 +36,11 @@ class PartSerializer(serializers.ModelSerializer):
 
 class TeamSerializer(serializers.ModelSerializer):
     part_type_name = PartTypeSerializer(source='part_type', read_only=True)
-    employee_count = serializers.IntegerField()
+    # employee_count = serializers.IntegerField(source='total_employees', read_only=True)
+    
     class Meta:
         model = Team
-        fields = ['id', 'name', 'part_type', 'part_type_name','employee_count']
+        fields = ['id', 'name', 'part_type', 'part_type_name', 'employee_count']
 
 class EmployeeSerializer(serializers.ModelSerializer):
     team_name = TeamSerializer(source='team', read_only=True)

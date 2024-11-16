@@ -179,10 +179,10 @@ class PartListView(BaseListView):
 
 class TeamListView(APIView):
     def get(self, request, *args, **kwargs):
-        teams = Team.objects.annotate(employee_count=Count('employee'))
+        teams = Team.objects.all()
         serializer = TeamSerializer(teams, many=True)        
         return Response(serializer.data, status=status.HTTP_200_OK)
-
+    
 class EmployeeListView(BaseListView):
     model = Employee
     serializer_class = EmployeeSerializer
