@@ -11,6 +11,8 @@ iyi çalışmalar dilerim!
 Uygulamanın docker ile ayağa kalkabilmesi için komutu uygulama ana dizininde çalıştırın:
 -  docker-compose up --build
 
+Docker ile ayağa kalkabilmesi için backend\backend\settings.py dosyasında veritabanı host bilgisini "db" olarak tanımladım. Eğer uygulama masaüstü çalışmalarda docker kullanılmadan, doğrudan kullanılacaksa veritabanı bilgilerinin değişmesi gerekiyor.
+
 ## Teknolojiler
 
 Bu proje, **Django** ve **ReactJS** kullanılarak geliştirilmiştir. Hem **backend** hem de **frontend** tarafında kapsamlı özellikler barındırmaktadır.

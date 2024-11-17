@@ -121,7 +121,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'asirin',
         'PASSWORD': 'asirin',  
-        'HOST': 'localhost',
+        'HOST': 'db', #docker container için db ye dönüştürüldü, normalde localhost
         'PORT': '5432',
     }
 }
