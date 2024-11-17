@@ -56,7 +56,7 @@ Django projesini başlatmak için gerekli komutları aşağıda bulabilirsiniz (
 3. Veritabanı tablolarını oluşturun:
    - `python manage.py migrate`
 
-4. Varsayılan verileri oluşturun:
+4. Varsayılan verileri oluşturun (Birim testi ve default veriler):
    - `python manage.py create_default_data`
 
 5. Sunucuyu başlatın:
