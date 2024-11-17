@@ -10,7 +10,7 @@ Bu proje, **Django** ve **ReactJS** kullanılarak geliştirilmiştir. Hem **back
 ### Frontend
 - **ReactJS** ile geliştirilmiş olan kullanıcı arayüzü, dinamik ve responsive bir tasarıma sahiptir.
 - **Materialized UI** stil kütüphanesi kullanılmıştır. Bootstrap yerine, zaman kısıtlaması nedeniyle daha aşina olduğum teknolojilere odaklandım.
-- Frontend'i çalıştırmak için:
+- Frontend'i çalıştırmak için (frontend klasörü dizininde yazılması gerekmektedir):
   1. `npm install` komutunu çalıştırarak bağımlılıkları yükleyin.
   2. `npm start` komutunu çalıştırarak uygulamayı başlatın.
   
@@ -32,7 +32,7 @@ Projenin veritabanı PostgreSQL üzerinde çalışmaktadır. Aşağıdaki adıml
 
 ### 2. Django Projesi Kurulumu
 
-Django projesini başlatmak için gerekli komutları aşağıda bulabilirsiniz:
+Django projesini başlatmak için gerekli komutları aşağıda bulabilirsiniz (backend klasörü dizininde yazılması gerekmektedir):
 
 
 1. **Virtual Environment (venv) Oluşturma**:
