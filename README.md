@@ -93,7 +93,7 @@ Proje içerisinde **5 farklı takım tipi** için kullanıcı girişi yapılabil
 
 ### Arayüz Özellikleri
 - Kullanıcıya özelleştirilmiş araçlar ve arayüz tasarımı.
-- **Paging yapılı datatable** API servisleri.
+- **Pagination yapılı datatable** API servisleri.
 - Uygulamanın arayüzünde **filtreleme** ve **özelleştirme** seçenekleri.
 - Uygulama, kullanıcıya sadece kendi yetkisi dahilindeki verilere erişim izni verir.
 
