@@ -102,4 +102,4 @@ Uygulama, veritabanında dinamik olarak güncellenen verilere dayanarak çalış
 
 ---
 
-İyi çalışmalar dilerim! Herhangi bir sorunuz veya öneriniz olursa, lütfen benimle iletişime geçin.
+İyi çalışmalar dilerim!
