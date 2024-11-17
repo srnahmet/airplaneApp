@@ -84,6 +84,7 @@ Uygulamada **REST API** servisleri kullanılmakta olup, **Swagger** ile tüm API
 - **JWT Token** ile güvenli kullanıcı yetkilendirmesi sağlanır.
   - **Superadmin** kullanıcısı tüm işlemleri gerçekleştirebilir.
   - **Personel** sadece kendi yetkileri dahilinde CRUD işlemleri yapabilir.
+- **Birim Testi**: Uygulama Docker ile ayağa kaldırılırken veya manuel olarak uygulama çalıştırılırken python manage.py create_default_data komutu ile default veriler yüklenmektedir. 
 - Uygulama içerisindeki veriler, personellerin yetkilerine göre filtrelenir ve bu kısıtlamalar hem frontend hem de backend tarafında uygulanır.
 
 ## Kullanıcı Arayüzü
