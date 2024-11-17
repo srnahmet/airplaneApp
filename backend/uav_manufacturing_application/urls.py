@@ -24,6 +24,7 @@ urlpatterns = [
     path('employee-list/', views.EmployeeListView.as_view(), name='employee-list'), 
     # by-id list
     path('employees/<int:team_id>/', views.EmployeeListViewByTeamId.as_view(), name='employee-list-by-team-id'),
+    path('parts-by-team-id/', views.PartListViewByTeamId.as_view(), name='uavs-by-team'),
     path('parts-list-by-uav-id/<int:uav_id>/', views.PartListViewByUAVId.as_view(), name='part-list-by-uav-id'),
     path('parts-list-by-uav-type-id/<int:uav_type_id>/', views.PartListViewByUavTypeId.as_view(), name='part-list-by-uav-type-id'),
     path('parts-list-by-uav-type-id-count/<int:uav_type_id>/', views.PartListViewByUavTypeIdPartTypeCounts.as_view(), name='part-list-by-uav-type-id'),

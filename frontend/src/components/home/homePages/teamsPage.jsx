@@ -1,9 +1,10 @@
-import { Box, Tab, Tabs,  } from '@mui/material'
+import { Box, Button, Tab, Tabs, } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import MUIDataTable from "mui-datatables";
 import { language } from '../../../utils/dataTableOptions';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-function TeamPage() {
+function TeamPage({ userInfo }) {
 
   // tab
   const [tabValue, setTabValue] = useState(1);
@@ -13,7 +14,31 @@ function TeamPage() {
   const [totalRecords, setTotalRecords] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // API'den veri çekmek için fonksiyon
+  const [uavs, setUavs] = useState([]);
+
+  const [parts, setParts] = useState([]);
+
+  const fetchPartData = async (newTabValue = null) => {
+    setLoading(true);
+    const team = newTabValue ? newTabValue : tabValue;
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/parts-by-team-id/?team_id=${team}`);
+
+      if (!response.ok) {
+        throw new Error('Parçalar yüklenirken bir hata oluştu');
+      }
+
+      const data = await response.json();
+
+      setParts(data.map(item => [item?.id, item?.create_date?.split('T')?.[0]]));
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
   const fetchData = async (newTabValue = null) => {
     setLoading(true);
     const team = newTabValue ? newTabValue : tabValue;
@@ -52,6 +77,29 @@ function TeamPage() {
       }).finally(() => setLoading(false));
   }
 
+  const handleDeletePart = async (partId) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/parts/${partId}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          // Authorization gibi ek başlıklar gerekiyorsa burada tanımlanabilir
+          // 'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Silme işlemi başarısız oldu');
+      }
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setLoading(false);
+      handleTabValueChange(null,tabValue);
+    }
+  };
+
   // Tablo ayarları
   const options = {
     count: totalRecords,
@@ -65,13 +113,45 @@ function TeamPage() {
   const handleTabValueChange = (event, newValue) => {
     setTabValue(newValue);
     fetchData(newValue);
+    fetchPartData(newValue);
   };
 
 
   useEffect(() => {
     fetchTeamInfo();
     fetchData();
+    fetchPartData();
   }, []);
+
+  const partColumns = [
+    {
+      name: "#",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "Oluşturma Tarihi",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value, tableMeta) => {
+          return (
+            <Button color='error' onClick={()=>handleDeletePart(tableMeta?.rowData?.[0])} endIcon={<DeleteIcon />}>Geri Dönüşüm Talebi</Button>
+          );
+        },
+      },
+    },
+  ];
+  
 
 
   return (
@@ -93,11 +173,17 @@ function TeamPage() {
       </Box>
 
       <MUIDataTable
-        title={tabs.filter(tab=>tab.id===tabValue)?.[0]?.name + " Personelleri"}
+        title={tabs.filter(tab => tab.id === tabValue)?.[0]?.name + " Personelleri"}
         data={data}
         columns={columns}
         options={options}
       />
+      {userInfo?.team?.part_type_id !== 5 && <MUIDataTable
+        title={"Takıma Bağlı Parçalar"}
+        data={parts}
+        columns={partColumns}
+        options={options}
+      />}
     </Box>
   )
 }
@@ -120,4 +206,8 @@ const columns = [
       sort: true,
     },
   },
+
 ];
+
+
+

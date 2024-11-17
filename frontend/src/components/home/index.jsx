@@ -31,7 +31,7 @@ const Home = ({userInfo}) => {
       }}>
         <Paper elevation={3} sx={{width:"100%"}}>
           {currentPage === "uaw" && <UawPage />}
-          {currentPage === "teams" && <TeamsPage />}
+          {currentPage === "teams" && <TeamsPage userInfo={userInfo}/>}
           {currentPage === "parts" && <PartsPage userInfo={userInfo}/>}
         </Paper>
       </Box>

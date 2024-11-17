@@ -15,6 +15,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.db.models import Count
 import os
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 #region token
@@ -206,6 +207,37 @@ class PartListViewByUavTypeIdPartTypeCounts(APIView):
         # Gruplama sonucu her bir part_type ile birlikte dönen veri
         return Response(parts_grouped, status=status.HTTP_200_OK)
 
+class PartListViewByTeamId(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name='team_id',
+                in_=openapi.IN_QUERY,
+                type=openapi.TYPE_INTEGER,
+                required=True
+            )
+        ],
+        responses={
+            200: UAVSerializer(many=True),
+            400: "team_id parametresi gereklidir.",
+            404: "Bulunamadı."
+        }
+    )
+    def get(self, request):
+        # team_id query parametresini alır
+        team_id = request.query_params.get('team_id')
+        if not team_id:
+            return Response({"detail": "team_id parametresi gereklidir."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Team nesnesini getir, yoksa 404 döner
+        team = get_object_or_404(Team, id=team_id)
+        
+        parts = Part.objects.filter(part_type=team.part_type,uav__isnull=True)
+        
+        # Part'ları serialize ederek döndürür
+        serializer = PartSerializer(parts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class TeamListView(APIView):
     def get(self, request, *args, **kwargs):
@@ -230,6 +262,7 @@ class EmployeeListViewByTeamId(APIView):
 class UAVTypeViewSet(generics.ListAPIView):
     queryset = UAVType.objects.all()
     serializer_class = UAVTypeSerializer
+
 
 class PartTypeViewSet(generics.ListAPIView):
     queryset = PartType.objects.all()
