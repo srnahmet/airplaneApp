@@ -8,7 +8,7 @@ import { fetchWithAuth } from '../../../utils/fetchHelper';
 function TeamPage({ userInfo }) {
 
   // tab
-  const [tabValue, setTabValue] = useState(userInfo?.team?.part_type_id?.toString() || "1");
+  const [tabValue, setTabValue] = useState(userInfo?.employee?.team_id?.toString() || "1");
   const [tabs, setTabs] = useState([]);
 
   const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ function TeamPage({ userInfo }) {
     try {
       const response = await fetchWithAuth(`http://127.0.0.1:8000/api/parts-by-team-id/?team_id=${team}`);
       const data = await response;
-      setParts(data.map(item => [item?.id, item?.create_date?.split('T')?.[0]]));
+      setParts(data.map(item => [item?.id, item?.uav_type_name?.name, item?.create_date?.split('T')?.[0]]));
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -113,6 +113,7 @@ function TeamPage({ userInfo }) {
 
 
   useEffect(() => {
+    console.log(userInfo)
     fetchTeamInfo();
     fetchData();
     fetchPartData();
@@ -127,7 +128,14 @@ function TeamPage({ userInfo }) {
       },
     },
     {
-      name: "Oluşturma Tarihi",
+      name: "IHA",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "Oluşturulma Tarihi",
       options: {
         filter: true,
         sort: true,
@@ -168,12 +176,12 @@ function TeamPage({ userInfo }) {
       </Box>
 
       <MUIDataTable
-        title={tabs.filter(tab => tab.id?.toString() === tabValue)?.[0]?.name + " Personelleri"}
+        title={tabs.filter(tab => tab.id?.toString() === tabValue?.toString())?.[0]?.name + " Personelleri"}
         data={data}
         columns={columns}
         options={options}
       />
-      {userInfo?.team?.part_type_id !== 5 && <MUIDataTable
+      {userInfo?.employee?.team_id !== 5 && <MUIDataTable
         title={"Takıma Bağlı Parçalar"}
         data={parts}
         columns={partColumns}

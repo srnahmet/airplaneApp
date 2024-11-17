@@ -6,8 +6,8 @@ import { fetchWithAuth } from '../../../utils/fetchHelper';
 
 function PartsPage({ userInfo }) {
 
-  const [snackBarMessage,setSnackBarMessage] = useState("İşlem tamamlandı!");
-  const [snackBarOpen,setSnackBarOpen] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("İşlem tamamlandı!");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
   // tab
   const [tabValue, setTabValue] = useState(0);
   const [tabs, setTabs] = useState([]);
@@ -118,9 +118,9 @@ function PartsPage({ userInfo }) {
   return (
     <Box>
       <Snackbar
-        anchorOrigin={{ vertical:"top", horizontal:"center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         open={snackBarOpen}
-        onClose={()=>setSnackBarOpen(false)}
+        onClose={() => setSnackBarOpen(false)}
         message={snackBarMessage}
         key={0}
       />
@@ -157,10 +157,12 @@ function PartsPage({ userInfo }) {
           </Button>
         }
       </Box>
-      <Paper sx={{ p: 5, textAlign: "center" }}>
-        <Typography variant="h5" gutterBottom>Parça Üret</Typography>
-        {(userInfo?.team?.part_type_id || userInfo?.isAdmin) && <CreatePartComponent userInfo={userInfo} fetchParthData={fetchParthData} tabValue={tabValue} partTypes={partTypes} uavTypes={tabs} />}
-      </Paper>
+      {(userInfo?.team?.part_type_id || userInfo?.isAdmin) &&
+        <Paper sx={{ p: 5, textAlign: "center" }}>
+          <Typography variant="h5" gutterBottom>Parça Üret</Typography>
+          <CreatePartComponent userInfo={userInfo} fetchParthData={fetchParthData} tabValue={tabValue} partTypes={partTypes} uavTypes={tabs} />
+        </Paper>
+      }
     </Box>
   )
 }

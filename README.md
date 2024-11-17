@@ -27,7 +27,7 @@ Bu proje, **Django** ve **ReactJS** kullanılarak geliştirilmiştir. Hem **back
 Projenin veritabanı PostgreSQL üzerinde çalışmaktadır. Aşağıdaki adımları takip ederek veritabanını başlatabilirsiniz:
 
 1. PostgreSQL'e bağlantı sağlayın.
-2. **username**: asirin, **password**: asirin olarak veritabanı kullanıcı bilgilerini kullanın.
+2. **db**:postgres, **schema**:asirin, **username**: asirin, **password**: asirin olarak veritabanı kullanıcı bilgilerini kullanın.
 3. Port **5432**'yi kullanarak bağlantıyı kurun.
 
 ### 2. Django Projesi Kurulumu

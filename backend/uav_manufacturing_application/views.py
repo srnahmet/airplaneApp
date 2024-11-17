@@ -105,9 +105,9 @@ def readme_view(request):
 #endregion
 
 #region Temel Viewlar
-# class UAVViewSet(viewsets.ModelViewSet):
-#     queryset = UAV.objects.all()
-#     serializer_class = UAVSerializer
+class UAVViewSet(viewsets.ModelViewSet):
+    queryset = UAV.objects.all()
+    serializer_class = UAVSerializer
 
 # class PartViewSet(viewsets.ModelViewSet):
 #     queryset = Part.objects.all()

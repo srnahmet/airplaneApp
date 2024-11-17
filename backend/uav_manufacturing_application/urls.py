@@ -7,7 +7,7 @@ from rest_framework_simplejwt.views import (
 )
 
 router = DefaultRouter()
-# router.register(r'uav', views.UAVViewSet)
+router.register(r'uav', views.UAVViewSet)
 # router.register(r'parts', views.PartViewSet)
 # router.register(r'teams', views.TeamViewSet)
 router.register(r'employee', views.EmployeeViewSet)
