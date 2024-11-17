@@ -7,14 +7,15 @@ from rest_framework_simplejwt.views import (
 )
 
 router = DefaultRouter()
-router.register(r'uav', views.UAVViewSet)
-router.register(r'parts', views.PartViewSet)
-router.register(r'teams', views.TeamViewSet)
+# router.register(r'uav', views.UAVViewSet)
+# router.register(r'parts', views.PartViewSet)
+# router.register(r'teams', views.TeamViewSet)
 router.register(r'employee', views.EmployeeViewSet)
 
 urlpatterns = [
     # genel api lar
     path('', include(router.urls)),
+    path('parts/', views.PartAPIView.as_view(), name='part-list'),
     # tipler
     path('part-types/', views.PartTypeViewSet.as_view(), name='part-type-list'), 
     path('uav-types/', views.UAVTypeViewSet.as_view(), name='uav-types-list'),

@@ -14,7 +14,6 @@ const App = () => {
   const handleLogin = (result) => {
     
     setUserInfo({...result,isAdmin:result?.employee?.id === 1})
-    console.log({...result,isAdmin:result?.employee?.id === 1})
     setIsAuthenticated(true); // Giriş yapıldığında ana sayfaya geçiş
   };
 

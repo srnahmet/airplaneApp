@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Box, Button, Paper, Snackbar, Tab, Tabs, Typography, } from '@mui/material'
 import { BarChart } from '@mui/x-charts/BarChart';
 import CreatePartComponent from './partsPageCreatePart';
+import { fetchWithAuth } from '../../../utils/fetchHelper';
 
 function PartsPage({ userInfo }) {
 
@@ -92,13 +93,9 @@ function PartsPage({ userInfo }) {
     }).toString();
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/create-uav/?${queryParams}`, {
+      const response = await fetchWithAuth(`http://127.0.0.1:8000/api/create-uav/?${queryParams}`, {
         method: 'POST',
       });
-
-      if (!response.ok) {
-        throw new Error('Hata: ' + response.statusText);
-      }
       fetchParthData(tabValue);
     } catch (error) {
       setSnackBarMessage("Montaj Tamamlanamadı!")

@@ -18,8 +18,8 @@ const CreatePartComponent = ({ userInfo,fetchParthData,tabValue, partTypes, uavT
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          "uav_type": partType,
-          "part_type": uavType
+          "uav_type": uavType,
+          "part_type": partType
         }),
       });
     } catch (error) {

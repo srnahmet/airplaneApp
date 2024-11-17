@@ -22,9 +22,9 @@ from uav_manufacturing_application.views import readme_view
 
 schema_view = get_schema_view(
    openapi.Info(
-        title="Airplane Parts Inventory API",
+        title="UAV Manufacturing Application API",
         default_version='v1',
-        description="API documentation for airplane parts inventory application",
+        description="API documentation for UAV Manufacturing Application (@Baykar)",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="srnahmet98@gmail.com"),
         license=openapi.License(name="MIT License"),

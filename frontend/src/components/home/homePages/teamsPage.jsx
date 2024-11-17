@@ -8,7 +8,7 @@ import { fetchWithAuth } from '../../../utils/fetchHelper';
 function TeamPage({ userInfo }) {
 
   // tab
-  const [tabValue, setTabValue] = useState(1);
+  const [tabValue, setTabValue] = useState(userInfo?.team?.part_type_id?.toString() || "1");
   const [tabs, setTabs] = useState([]);
 
   const [data, setData] = useState([]);
@@ -161,7 +161,7 @@ function TeamPage({ userInfo }) {
         >
           {
             tabs.map((tab) => {
-              return (<Tab label={<div>{tab?.name}  <div>{" (" + tab?.employee_count + " Çalışan)"}</div></div>} value={tab?.id} />)
+              if (userInfo.isAdmin || userInfo?.team?.part_type_id?.toString() === tab?.id?.toString() ) return (<Tab label={<div>{tab?.name}  <div>{" (" + tab?.employee_count + " Çalışan)"}</div></div>} value={tab?.id} />)
             })
           }
         </Tabs>

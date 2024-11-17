@@ -18,6 +18,7 @@ import os
 from django.shortcuts import get_object_or_404
 import jwt
 from django.conf import settings
+from rest_framework.exceptions import NotFound
 # Create your views here.
 
 #region token
@@ -104,21 +105,64 @@ def readme_view(request):
 #endregion
 
 #region Temel Viewlar
-class UAVViewSet(viewsets.ModelViewSet):
-    queryset = UAV.objects.all()
-    serializer_class = UAVSerializer
+# class UAVViewSet(viewsets.ModelViewSet):
+#     queryset = UAV.objects.all()
+#     serializer_class = UAVSerializer
 
-class PartViewSet(viewsets.ModelViewSet):
-    queryset = Part.objects.all()
-    serializer_class = PartSerializer
+# class PartViewSet(viewsets.ModelViewSet):
+#     queryset = Part.objects.all()
+#     serializer_class = PartSerializer
 
-class TeamViewSet(viewsets.ModelViewSet):
-    queryset = Team.objects.all()
-    serializer_class = TeamSerializer
+# class TeamViewSet(viewsets.ModelViewSet):
+#     queryset = Team.objects.all()
+#     serializer_class = TeamSerializer
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+
+class PartAPIView(APIView):
+    @swagger_auto_schema(
+        operation_description="Yeni bir parça oluştur",
+        request_body=PartSerializer,  
+        responses={201: PartSerializer}
+    )
+    def post(self, request):
+        print(request)
+        serializer = PartSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # 201 Created: başarıyla oluşturuldu
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # 400 Bad Request: Hatalı veri
+    
+    @swagger_auto_schema(operation_description="Parçayı güncelle") ## uygulamada kullanılmadığı için ek geliştirme yapılmadı
+    def put(self, request, pk):
+        return Response("Ek Geliştirme Yapılmadı", status=status.HTTP_400_BAD_REQUEST)
+        try:
+            part = Part.objects.get(pk=pk)
+        except Part.DoesNotExist:
+            raise NotFound(detail="Part not found", code=404)
+        
+        serializer = PartSerializer(part, data=request.data, partial=False)  # False for full update, True for partial
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    @swagger_auto_schema(operation_description="Parçayı sil")
+    def delete(self, request, pk):
+        try:
+            part = Part.objects.get(pk=pk)
+            
+            user_info = get_user_info_from_token(request)
+            # Eğer admin değilse ve part_type ID'si eşleşmiyorsa yetkisiz hata döndür
+            if user_info["is_admin"] is not True:
+                if user_info["team"].part_type != part:
+                    return HttpResponse('Unauthorized', status=401)
+            part.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Part.DoesNotExist:
+            raise NotFound(detail="Part not found", code=404)
 #endregion
 
 #region Datatables işlemlerini yapmak için temel sınıf 
