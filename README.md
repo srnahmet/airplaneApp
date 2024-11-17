@@ -1,4 +1,4 @@
-# İHA Üretim Uygulaması
+# İHA Üretim Uygulaması / Ahmet Şirin
 
 Merhaba,  
 İş yoğunluğumdan dolayı projeyi olabildiğince hızlı bir şekilde gerçekleştirdim. Bazı eksiklikler ve düzensizliklerin farkındayım, ancak bu proje üzerinde çalışmaya devam edebilmek için gereken tüm temel özellikleri yerine getirmeye özen gösterdim. Umarım ilginizi çeker ve iyi çalışmalar dilerim!
