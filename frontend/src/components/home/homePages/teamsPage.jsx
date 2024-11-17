@@ -75,7 +75,7 @@ function TeamPage({ userInfo }) {
   const handleDeletePart = async (partId) => {
     setLoading(true);
     try {
-      const response = await fetchWithAuth(`http://127.0.0.1:8000/api/parts/${partId}/`, {
+      const response = await fetchWithAuth(`http://127.0.0.1:8000/api/parts-by-id/${partId}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

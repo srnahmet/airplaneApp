@@ -15,7 +15,8 @@ router.register(r'employee', views.EmployeeViewSet)
 urlpatterns = [
     # genel api lar
     path('', include(router.urls)),
-    path('parts/', views.PartAPIView.as_view(), name='part-list'),
+    path('parts/', views.PartAPIView.as_view(), name='part-create'),
+    path('parts-by-id/<int:id>/', views.PartAPIView.as_view(), name='part-delete'),
     # tipler
     path('part-types/', views.PartTypeViewSet.as_view(), name='part-type-list'), 
     path('uav-types/', views.UAVTypeViewSet.as_view(), name='uav-types-list'),

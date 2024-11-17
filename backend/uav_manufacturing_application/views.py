@@ -128,7 +128,6 @@ class PartAPIView(APIView):
         responses={201: PartSerializer}
     )
     def post(self, request):
-        print(request)
         serializer = PartSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -136,10 +135,10 @@ class PartAPIView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)  # 400 Bad Request: Hatalı veri
     
     @swagger_auto_schema(operation_description="Parçayı güncelle") ## uygulamada kullanılmadığı için ek geliştirme yapılmadı
-    def put(self, request, pk):
+    def put(self, request, id):
         return Response("Ek Geliştirme Yapılmadı", status=status.HTTP_400_BAD_REQUEST)
         try:
-            part = Part.objects.get(pk=pk)
+            part = Part.objects.get(id=id)
         except Part.DoesNotExist:
             raise NotFound(detail="Part not found", code=404)
         
@@ -149,20 +148,19 @@ class PartAPIView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    @swagger_auto_schema(operation_description="Parçayı sil")
-    def delete(self, request, pk):
+    @swagger_auto_schema(
+        manual_parameters=[openapi.Parameter('id', openapi.IN_PATH, description="Silinecek parçanın id'si", type=openapi.TYPE_INTEGER)],
+        operation_description="Partayı sil",
+        responses={204: "No Content", 404: "Not Found"}  # Başarılı silme için 204 döner, 404 silinmek istenen parça bulunamazsa döner
+    )
+    def delete(self, request, id, *args, **kwargs):
+        print(id)
         try:
-            part = Part.objects.get(pk=pk)
-            
-            user_info = get_user_info_from_token(request)
-            # Eğer admin değilse ve part_type ID'si eşleşmiyorsa yetkisiz hata döndür
-            if user_info["is_admin"] is not True:
-                if user_info["team"].part_type != part:
-                    return HttpResponse('Unauthorized', status=401)
+            part = Part.objects.get(pk=id)
             part.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(status=status.HTTP_204_NO_CONTENT)  # 204: Başarıyla silindi
         except Part.DoesNotExist:
-            raise NotFound(detail="Part not found", code=404)
+            return Response({"detail": "Part not found."}, status=status.HTTP_404_NOT_FOUND)  # 404: Parça bulunamadı
 #endregion
 
 #region Datatables işlemlerini yapmak için temel sınıf 
