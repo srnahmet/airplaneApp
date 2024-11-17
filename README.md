@@ -3,7 +3,7 @@
 Merhaba,  
 İş yoğunluğumdan dolayı projeyi olabildiğince hızlı bir şekilde gerçekleştirdim. Bazı eksiklikler ve düzensizliklerin farkındayım, ancak bu proje üzerinde çalışmaya devam edebilmek için gereken tüm temel özellikleri yerine getirmeye özen gösterdim ve elimden geldiğince çeşitli fonksiyonlar oluşturdum.
 
-**Uygulama içeriği hakkında görsel ve videolar oluşturdum. __ICERIK__ adlı klasör içerisinde mevcut.
+- Uygulama içeriği hakkında görsel ve videolar oluşturdum. __ICERIK__ adlı klasör içerisinde mevcut.
 iyi çalışmalar dilerim!
 
 ## Docker
