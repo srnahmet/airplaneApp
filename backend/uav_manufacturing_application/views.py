@@ -16,6 +16,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.db.models import Count
 import os
 from django.shortcuts import get_object_or_404
+import jwt
+from django.conf import settings
 # Create your views here.
 
 #region token
@@ -23,13 +25,12 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        # Token içine ek bilgi ekleyebilirsiniz
         token['username'] = user.username
         return token
 
     def validate(self, attrs):
         data = super().validate(attrs)
-        # Kullanıcıya ait employee bilgilerini ekleyin
+        # Kullanıcıya ait employee bilgileri
         try:
             employee = Employee.objects.get(user_id=self.user.id)
             team = Team.objects.get(id=employee.team_id)
@@ -59,6 +60,33 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
+
+def get_user_info_from_token(request):
+    token = request.headers.get('Authorization')  # Header'dan token alır
+    print(token[7:])
+    if token:
+        try:
+            # Token'ı çözümler
+            decoded_token = jwt.decode(token[7:],  settings.SECRET_KEY, algorithms=['HS256'])
+            user_id = decoded_token.get('user_id', None)
+            employee = Employee.objects.get(id=user_id)
+            
+            user_info = {
+                "employee":employee,
+                "team": employee.team,
+                "is_admin": True if user_id == 1 else False
+            } 
+            return user_info
+        except jwt.ExpiredSignatureError:
+            print("jwt.ExpiredSignatureError")
+            return None
+        except jwt.DecodeError:
+            print("jwt.DecodeError")
+            return None
+        except:
+            print("hata")
+            return None
+    return None
 #endregion
 
 #region mainpage readme
@@ -224,10 +252,16 @@ class PartListViewByTeamId(APIView):
         }
     )
     def get(self, request):
+        user_info = get_user_info_from_token(request)
+
         # team_id query parametresini alır
         team_id = request.query_params.get('team_id')
-        if not team_id:
-            return Response({"detail": "team_id parametresi gereklidir."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Eğer admin değilse ve takım ID'si eşleşmiyorsa yetkisiz hata döndür
+        if user_info["is_admin"] is not True:
+            if str(team_id) != str(user_info["team"].id):
+                return HttpResponse('Unauthorized', status=401)
+
         
         # Team nesnesini getir, yoksa 404 döner
         team = get_object_or_404(Team, id=team_id)
@@ -237,7 +271,6 @@ class PartListViewByTeamId(APIView):
         # Part'ları serialize ederek döndürür
         serializer = PartSerializer(parts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
 
 class TeamListView(APIView):
     def get(self, request, *args, **kwargs):
@@ -250,7 +283,8 @@ class EmployeeListView(BaseListView):
     serializer_class = EmployeeSerializer
 
 class EmployeeListViewByTeamId(APIView):
-    def get(self, request, team_id, *args, **kwargs):
+    
+    def get(self, request, team_id, *args, **kwargs):        
         employees = Employee.objects.filter(team_id=team_id)
         
         if not employees.exists():
@@ -292,6 +326,12 @@ class CreateUAVAndAssignParts(APIView):
         }
     )
     def post(self, request, *args, **kwargs):
+        user_info = get_user_info_from_token(request)
+
+        # Eğer admin değilse ve takım ID'si eşleşmiyorsa yetkisiz hata döndür
+        if user_info["is_admin"] is not True:
+            if not user_info["team"].is_assembly_team:
+                return HttpResponse('Unauthorized', status=401)
         # Gelen uav_type_id'yi alır
         uav_type_id = request.query_params.get('uav_type_id')
 

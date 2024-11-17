@@ -50,6 +50,7 @@ const Login = ({ onLogin }) => {
             const result = await response.json();
 
             if (response.ok) {
+                localStorage.setItem('access_token', result.access);
                 onLogin(result); 
             } else {
                 setError(result.detail || "Giriş başarısız!");

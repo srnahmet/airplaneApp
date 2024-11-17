@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import MUIDataTable from "mui-datatables";
 import { language } from '../../../utils/dataTableOptions';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { fetchWithAuth } from '../../../utils/fetchHelper';
 
 function TeamPage({ userInfo }) {
 
@@ -22,14 +23,8 @@ function TeamPage({ userInfo }) {
     setLoading(true);
     const team = newTabValue ? newTabValue : tabValue;
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/parts-by-team-id/?team_id=${team}`);
-
-      if (!response.ok) {
-        throw new Error('Parçalar yüklenirken bir hata oluştu');
-      }
-
-      const data = await response.json();
-
+      const response = await fetchWithAuth(`http://127.0.0.1:8000/api/parts-by-team-id/?team_id=${team}`);
+      const data = await response;
       setParts(data.map(item => [item?.id, item?.create_date?.split('T')?.[0]]));
     } catch (error) {
       console.log(error.message);
@@ -80,7 +75,7 @@ function TeamPage({ userInfo }) {
   const handleDeletePart = async (partId) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/parts/${partId}/`, {
+      const response = await fetchWithAuth(`http://127.0.0.1:8000/api/parts/${partId}/`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

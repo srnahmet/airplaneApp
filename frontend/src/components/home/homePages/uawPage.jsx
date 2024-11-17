@@ -7,6 +7,7 @@ import akinciImage from "./../../../assets/images/akinci.png"
 import kizileImage from "./../../../assets/images/kizilelma.png"
 import { language } from '../../../utils/dataTableOptions';
 import { DataGrid } from '@mui/x-data-grid';
+import { fetchWithAuth } from '../../../utils/fetchHelper';
 
 
 const uavTypeToImage = (type) => {
@@ -45,7 +46,7 @@ function UAWPage() {
     if (searchValue) body["search_value"] = searchValue;
     if (orderColumn) body["order_column"] = orderColumn;
     try {
-      const response = await fetch("http://localhost:8000/api/uav-list/", {
+      const response = await fetchWithAuth("http://localhost:8000/api/uav-list/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,11 +54,8 @@ function UAWPage() {
         body: JSON.stringify(body),
       });
 
-      if (!response.ok) {
-        throw new Error("Veri çekilirken bir hata oluştu!");
-      }
-
-      const result = await response.json();
+      
+      const result = await response;
       setTableData(result.data.map((item) => [
         item.id,
         item.uav_type.name,
@@ -66,6 +64,7 @@ function UAWPage() {
       ]));
       setTotalRecords(result.recordsFiltered);
     } catch (error) {
+      setTableData(tableData);
       console.error("API hatası:", error);
     } finally {
       setLoading(false);
