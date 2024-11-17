@@ -9,19 +9,19 @@ import PartsPage from './homePages/partsPage';
 import { useState } from 'react';
 import { Paper } from '@mui/material';
 
-const Home = () => {
+const Home = ({userInfo}) => {
 
   const [currentPage, setCurrentPage] = useState("uaw")
 
   const pages = [
     { id: "uaw", name: "İHA Envanteri", desc: "İnsansız Hava Araçlarının listesi ve bilgileri" },
     { id: "teams", name: "Takımlar", desc: "Farklı takımlar ve görev dağılımlarının detayları" },
-    { id: "parts", name: "Parçalar ve Montaj", desc: "Montajda kullanılan bileşenler ve ekipmanlar" },
+    { id: "parts", name: "Parça Üret ve Montajla", desc: "Montajda kullanılan bileşenler ve ekipmanlar" },
   ];
 
   return (
     <Box>
-      <AppBarComponent pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+      <AppBarComponent pages={pages} currentPage={currentPage} setCurrentPage={setCurrentPage} userInfo={userInfo}/>
 
       <Box sx={{
         display: "flex",
@@ -32,7 +32,7 @@ const Home = () => {
         <Paper elevation={3} sx={{width:"100%"}}>
           {currentPage === "uaw" && <UawPage />}
           {currentPage === "teams" && <TeamsPage />}
-          {currentPage === "parts" && <PartsPage />}
+          {currentPage === "parts" && <PartsPage userInfo={userInfo}/>}
         </Paper>
       </Box>
     </Box>

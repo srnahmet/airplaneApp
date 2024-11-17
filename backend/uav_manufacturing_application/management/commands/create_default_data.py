@@ -48,7 +48,7 @@ class Command(BaseCommand):
             PartType.objects.create(**part_type)
 
         # Part Type'ları oluşturma
-        montagedParts = []
+        assembledParts = []
         for index, uav in enumerate(uavs, start=1):
             for part_type_id in range(1, 5):
                 create_date = datetime.strptime(uav['create_date'], '%Y-%m-%d')  
@@ -57,13 +57,13 @@ class Command(BaseCommand):
 
                 modified_create_date = create_date - timedelta(days=random_days_ago)  
 
-                montagedParts.append({
+                assembledParts.append({
                     'uav_id': index,
                     'uav_type_id': uav['uav_type_id'],
                     'create_date': modified_create_date.strftime('%Y-%m-%d'),  
                     'part_type_id': part_type_id
                 })
-        for part in montagedParts:
+        for part in assembledParts:
             Part.objects.create(**part)  
         newParts = [
                 {'part_type_id': '1', 'uav_type_id': '1', 'create_date': '2024-11-2'},
@@ -106,14 +106,14 @@ class Command(BaseCommand):
             {'name': 'Gövde Takımı', 'part_type_id': 2},
             {'name': 'Kuyruk Takımı', 'part_type_id': 3},
             {'name': 'Aviyonik Takımı', 'part_type_id': 4},
-            {'name': 'Montaj Takımı', 'is_montage_team': True}  # Montaj takımı
+            {'name': 'Montaj Takımı', 'is_assembly_team': True}  # Montaj takımı
         ]
         for team in teams:
             part_type_id = team.get('part_type_id')
             part_type = None
             if part_type_id:
                 part_type = PartType.objects.get(id=part_type_id)
-            Team.objects.create(name=team['name'], part_type=part_type, is_montage_team=team.get('is_montage_team', False))
+            Team.objects.create(name=team['name'], part_type=part_type, is_assembly_team=team.get('is_assembly_team', False))
 
         # Süper kullanıcıyı oluşturma
         superuser = User.objects.create_superuser(

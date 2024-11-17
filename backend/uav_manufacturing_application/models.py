@@ -34,12 +34,12 @@ class Part(models.Model):
     uav = models.ForeignKey(UAV, on_delete=models.CASCADE,null=True,default=None)  # Part yalnızca bir UAV ile ilişkili
 
     def __str__(self):
-        return f"{self.name} ({self.part_type.name} - {self.uav_type.name})"
+        return f"{self.part_type.name} - {self.uav_type.name}"
 
 # Team Modeli
 class Team(models.Model):
     name = models.CharField(max_length=100,default=None)
-    is_montage_team = models.BooleanField(default=False) # Takım montaj takımı mı?
+    is_assembly_team = models.BooleanField(default=False) # Takım montaj takımı mı?
     part_type = models.ForeignKey(PartType, on_delete=models.CASCADE, null=True, blank=True)  # Her takım yalnızca belirli bir türde parça üretir, montaj takımı için belirtilmez
 
     def __str__(self):

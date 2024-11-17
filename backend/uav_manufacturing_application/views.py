@@ -43,7 +43,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
                 'name': team.name,
                 'part_type_name': team.part_type.name if team.part_type else None,
                 'part_type_id': team.part_type.id if team.part_type else None,
-                'is_montage_team':team.is_montage_team  
+                'is_assembly_team':team.is_assembly_team  
             }
 
         except Team.DoesNotExist:
@@ -234,4 +234,63 @@ class UAVTypeViewSet(generics.ListAPIView):
 class PartTypeViewSet(generics.ListAPIView):
     queryset = PartType.objects.all()
     serializer_class = PartTypeSerializer
+#endregion
+
+#region montaj
+class CreateUAVAndAssignParts(APIView):
+    uav_type_id_param = openapi.Parameter(
+        'uav_type_id',
+        openapi.IN_QUERY,
+        type=openapi.TYPE_INTEGER,
+        required=True,
+    )
+
+    @swagger_auto_schema(
+        manual_parameters=[uav_type_id_param],
+        responses={
+            201: UAVSerializer,
+            400: openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'detail': openapi.Schema(type=openapi.TYPE_STRING),
+                },
+                description="Hata detayları",
+            ),
+        }
+    )
+    def post(self, request, *args, **kwargs):
+        # Gelen uav_type_id'yi alır
+        uav_type_id = request.query_params.get('uav_type_id')
+
+        # UAVType modelinden gelen id ile UAVType objesini alır
+        try:
+            uav_type = UAVType.objects.get(id=uav_type_id)
+        except UAVType.DoesNotExist:
+            return Response({"detail": "İHA tipi bulunamadı "}, status=status.HTTP_404_NOT_FOUND)
+
+        # UAV tipine ait olması gereken tüm PartType'ları alıyoruz
+        required_part_types = PartType.objects.all()
+
+        # Her bir gerekli PartType'ın bu uav_type_id için mevcut olup olmadığını kontrol ediyoruz
+        for part_type in required_part_types:
+            if not Part.objects.filter(uav_type=uav_type, part_type__id=part_type.id, uav=None).exists():
+                return Response(
+                 {"detail": f"Parça Eksik: {part_type.name}"},
+                 status=status.HTTP_400_BAD_REQUEST
+                 )
+
+        # UAV modelini oluşturur
+        uav = UAV.objects.create(uav_type=uav_type)
+
+        # Seçili UAV tipine bağlı olan tüm parçaları alır (part_type a göre gruplama ve distinct yapılarak tek parçaya montaj sağlanacak)
+        parts = Part.objects.filter(uav_type=uav_type, uav=None).distinct('part_type')
+
+        # Her part_type için yalnızca bir parça assign işlemi yapılır
+        for part in parts:
+            part.uav = uav
+            part.save()
+
+        # Oluşturulan UAV'i döner
+        serializer = UAVSerializer(uav)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 #endregion

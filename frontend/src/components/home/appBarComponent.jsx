@@ -15,14 +15,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Logo from "./../../assets/images/baykar_logo2_beyaz.png"
 import PersonIcon from '@mui/icons-material/Person';
 
-const AppBarComponent = ({ pages, currentPage, setCurrentPage }) => {
+const AppBarComponent = ({ pages, currentPage, setCurrentPage, userInfo }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   // const handleOpenNavMenu = (event) => {
   //   setAnchorElNav(event.currentTarget);
   // };
-  
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -47,14 +47,14 @@ const AppBarComponent = ({ pages, currentPage, setCurrentPage }) => {
             alt="Giriş Resmi"
             sx={{ maxWidth: "5%", maxHeight: "auto", mr: 1 }}
           />
-        
+
           <Box sx={{ flexGrow: 1, display: { xs: '1em', md: 'flex' } }}>
-            {pages.map((page,index) => (
+            {pages.map((page, index) => (
               <Button
                 key={index}
-                onClick={()=>openSelectedPage(page?.id)}
-                sx={{ my: 2, color: currentPage!==page.id ? 'white' : "none", display: 'block' }}
-                color={currentPage===page.id ? 'warning' : ""}
+                onClick={() => openSelectedPage(page?.id)}
+                sx={{ my: 2, color: currentPage !== page.id ? 'white' : "none", display: 'block' }}
+                color={currentPage === page.id ? 'warning' : ""}
               >
                 {page.name}
               </Button>
@@ -82,11 +82,14 @@ const AppBarComponent = ({ pages, currentPage, setCurrentPage }) => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {['Admin Paneli', 'Çıkış'].map((setting) => (
-                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                </MenuItem>
-              ))}
+
+
+              {userInfo?.isAdmin && <MenuItem key={"Admin Paneli"} onClick={() => handleCloseUserMenu("Admin Paneli")}>
+                <Typography sx={{ textAlign: 'center' }}>{"Admin Paneli"}</Typography>
+              </MenuItem>}
+              <MenuItem key={"Çıkış"} onClick={() => handleCloseUserMenu("Çıkış")}>
+                <Typography sx={{ textAlign: 'center' }}>{"Çıkış"}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>

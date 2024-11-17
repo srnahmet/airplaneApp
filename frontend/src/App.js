@@ -8,12 +8,13 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [accessToken, setAccessToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [refreshToken, setRefreshToken] = useState(null);
 
-  const handleLogin = (access, refresh) => {
-    setAccessToken(access);
-    setRefreshToken(refresh);
+  const handleLogin = (result) => {
+    
+    setUserInfo({...result,isAdmin:result?.employee?.id === 1})
+    console.log({...result,isAdmin:result?.employee?.id === 1})
     setIsAuthenticated(true); // Giriş yapıldığında ana sayfaya geçiş
   };
 
@@ -35,7 +36,7 @@ const App = () => {
             <Login onLogin={handleLogin} />
           </Box>
         ) : (
-          <Home />
+          <Home userInfo={userInfo}/>
         )}
       </Container>
     </ThemeProvider>

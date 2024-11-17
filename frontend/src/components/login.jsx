@@ -50,7 +50,7 @@ const Login = ({ onLogin }) => {
             const result = await response.json();
 
             if (response.ok) {
-                onLogin(result.access, result.refresh); 
+                onLogin(result); 
             } else {
                 setError(result.detail || "Giriş başarısız!");
             }

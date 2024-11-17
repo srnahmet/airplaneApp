@@ -28,7 +28,8 @@ urlpatterns = [
     path('parts-list-by-uav-type-id/<int:uav_type_id>/', views.PartListViewByUavTypeId.as_view(), name='part-list-by-uav-type-id'),
     path('parts-list-by-uav-type-id-count/<int:uav_type_id>/', views.PartListViewByUavTypeIdPartTypeCounts.as_view(), name='part-list-by-uav-type-id'),
 
-
+    # montaj
+    path('create-uav/', views.CreateUAVAndAssignParts.as_view(), name='create_uav'),
 
     #token
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
