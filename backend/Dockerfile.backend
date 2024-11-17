@@ -23,4 +23,4 @@ ENV DB_HOST=db
 EXPOSE 8000
 
 # Django server'ı çalıştırıyoruz
-CMD ["bash", "-c", "python manage.py migrate && python manage.py create_default_data && python manage.py runserver 0.0.0.0:8000"]
+CMD ["bash", "-c", "python manage.py migrate && python manage.py flush --noinput && python manage.py create_default_data && python manage.py runserver 0.0.0.0:8000"]
